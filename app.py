@@ -5,6 +5,9 @@ from flask import Flask, render_template, flash, redirect, url_for, session, req
 from passlib.hash import sha256_crypt
 from flask_mysqldb import MySQL
 
+from sqlhelpers import *
+from forms import *
+
 app = Flask(__name__)
 
 app.config['MySQL_HOST'] = 'localhost'
@@ -15,7 +18,16 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
-@app.route('/')
+@app.route('/register', methods=['GET' , 'POST'])
+def register():
+    form = RegisterForm(request.form)
+    users = Table("users","name","email","username","password")
+
+    if request.method == 'POST' and form.validate():
+        pass
+
+    return render_template('register.html',form=form)
+@app.route("/")
 def index():
     return render_template('index.html')
 
