@@ -19,24 +19,36 @@ class Block():
     nonce = 0
     previous_hash = "0" * 64
 
-    def __init__(self,data,number = 0):
+    def __init__(self,number=0 ,previous_hash="0"*64 ,data=None ,nonce = 0):
         self.data = data
         self.number = number
+        self.previous_hash = previous_hash
+        self.nonce = nonce
     
     def hash(self):
-        return updatehash(self.data,self.number,self.previous_hash,self.nonce) 
+        return updatehash(
+            self.data,
+            self.number,
+            self.previous_hash,
+            self.nonce) 
     
     def __str__(self):
-        return str("Block#: %s\nHash: %s\nPrevious: %s\nData: %s\nNonce: %s\n" %(self.number , self.hash() , self.previous_hash , self.data , self.nonce) )
+        return str("Block#: %s\nHash: %s\nPrevious: %s\nData: %s\nNonce: %s\n" %(
+            self.number,
+            self.hash(),
+            self.previous_hash,
+            self.data, 
+            self.nonce))
 
 class Blockchain():
     difficulty = 5
 
-    def __init__(self,chain = []):
-        self.chain = chain
+    def __init__(self):
+        self.chain = []
 
     def add(self , block):
         self.chain.append(block)
+
 
     def remove(self , block):
         self.chain.remove(block)
